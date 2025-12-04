@@ -1,0 +1,390 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>Summer Meals Calculator</h1>
+        <h2>January 2026</h2>
+
+        <h3>INSTRUCTIONS</h3>
+
+        <p>Add your program's inputs to the boxes in gold: 21,000</p>
+        <p>If needed, guidance on standard estimates are provided in *purple*.</p>
+
+        <h3>Revenue</h3>
+
+        <p>
+            <strong>How many meals do you plan to serve each week?</strong>
+        </p>
+
+        <p>
+            Breakfast meals <br/>
+            <input id="breakfast_meals" name="breakfast_meals" type="number" />
+        </p>
+        <p>
+            
+        </p>
+
+        <p>
+            Lunch meals<br/>
+            <input id="lunch_meals" name="lunch_meals" type="number" />
+        </p>
+
+        <p>
+            <strong>How many weeks during the summer will your program serve meals?</strong> <br />
+            <em>*Most programs run 8 weeks*</em> <br/>
+            <input id="weeks" name="weeks" type="number" />
+        </p>
+
+        <p>
+            <strong>Estimated Revenue for SFSP: <span id="sfsp_revenue"></span></strong>
+        </p>
+
+        <p>
+            <strong>Estimated Revenue for SSO: <span id="sso_revenue"></span></strong>
+        </p>
+    
+        <h3>Expenses</h3>
+        
+        <h4>Labor</h4>
+        
+        <p>
+            <strong>Does your program schedule include additional time before or after meal service weeks for setup, training, or close-out? Enter number of non-revenue-generating weeks.</strong><br />
+            <em>*For example, a half week of prep/orientation and a half week of close-out would equal 1 week*</em><br />
+            <input id="non_revenue_weeks" name="non_revenue_weeks" type="number" />
+        </p>
+        
+        <p>
+            <strong>How many managerial positions will your program require?</strong><br/>
+            <input id="managerial_positions" name="managerial_positions" type="number" />
+        </p>
+
+        <p>
+            <strong>What is the approx weekly salary of managerial positions?</strong><br />
+            <em>*A weekly salary of $1,200 assumes a 40-hour work week at $30/hour*</em><br />
+            <input id="managerial_weekly_salary" name="managerial_weekly_salary" type="number" />
+        </p>
+
+        <p>
+            <strong>How many supporting staff positions will your program require?</strong><br/>
+            <input id="support_positions" name="support_positions" type="number" />
+        </p>
+        
+        <p>
+            <strong>What is the approx weekly salary of supporting staff positions?</strong> <br />
+            <em>*A weekly salary of $800 assumes a 40-hour work week at $20/hour*</em><br />
+            <input id="support_weekly_salary" name="support_weekly_salary" type="number" />
+        </p>
+
+        <p>
+            <strong>How many student staff positions will your program require? </strong><br />
+            <input id="student_staff_positions" name="student_staff_positions" type="number" />
+        </p>
+
+        <p>
+            <strong>What is the approx weekly salary of student staff positions?</strong> <br />
+            <em>*A weekly salary of $400 assumes a 40-hour work week at $10/hour*</em><br />
+            <input id="student_staff_weekly_salary" name="student_staff_weekly_salary" type="number" />
+        </p>
+
+        <h4>Food</h4>
+        
+        <p>
+            <strong>What is your cost per meal for breakfast?</strong><br/>
+            <input id="breakfast_cost_per_meal" name="breakfast_cost_per_meal" type="number" />
+        </p>
+        
+        <p>
+            <strong>What is your cost per meal for lunch?</strong><br />
+            <em>*If unsure of your cost per meal, we recommend using $1.50 for breakfasts and $2.57 for lunches*</em><br />
+            <input id="lunch_cost_per_meal" name="lunch_cost_per_meal" type="number" />
+        </p>
+
+        <h4>Other</h4>
+        
+        <p>
+            <strong>If desired, add total summer marketing costs here.</strong> <br />
+            <em>*We recommend entering between $100 and $1,000, depending on your program size*</em><br />
+            <input id="marketing_costs" name="marketing_costs" type="number" />
+        </p>
+
+        <p>
+            <strong>Enter other anticipated costs for entire summer here.</strong><br />
+            Examples: packaging, paper products, vehicle rental, gas, etc. <br />
+            <em>*We recommend entering between $5,000 and $100,000, depending on your program size*</em><br />
+            <input id="other_costs" name="other_costs" type="number" />
+        </p>
+        
+        <p>
+            <strong>Estimated Expenses: <span id="expenses" name="expenses"></span></strong>
+        </p>
+
+        <p>
+            <strong>Estimated Net Revenue for SFSP: <span id="sfsp_net_revenue" name="sfsp_net_revenue"></span></strong>
+        </p>
+        
+        <p>
+            <strong>Estimated Net Revenue for SSO: <span id="sso_net_revenue" name="sso_net_revenue"></span></strong>
+        </p>
+    
+    </body>
+
+    <script type="text/javascript">
+        // create global revenue and variables expense variables to support net revenue calculations
+        var sfsp_revenue;
+        var sso_revenue;
+        var expenses;
+        var sfsp_net_revenue;
+        var sso_net_revenue;
+
+        // set reimbursement values
+        var reimbursement_rates = {
+            sfsp: {
+                breakfast: 3.03,
+                lunch: 5.4
+            },
+            sso: {
+                breakfast: 2.94,
+                lunch: 4.86
+            }
+        };
+        
+        // get values from user inputs
+        var user_inputs = {};
+        var user_inputs_list = document.getElementsByTagName("input");
+        var get_user_inputs = function(){
+            for (user_input of user_inputs_list) {
+                user_inputs[user_input.name] = Number(user_input.value);
+            };
+            // console.log(user_inputs);
+        };
+        // get_user_inputs();
+
+        // convert dollar amounts to USD format
+        var to_dollars = function(dollar_amount) {
+            return dollar_amount.toLocaleString('en-US', {style: 'currency', currency: 'USD'})
+        };
+
+        // // create dictionary to hold calculated dollar amounts
+        // var output_spans = {};
+        // var output_spans_list = document.getElementsByTagName("span");
+        // var output_span_values = function(){
+        //     for (output_span of output_spans_list) {
+        //         output_spans[output_span.id] = null;
+        //     };
+        //     console.log(output_spans);
+        // };
+        // output_span_values();
+        
+        // calculate SFSP revenue
+        var calculate_program_revenues = function() {
+            // get current user inputs
+            get_user_inputs();
+
+            // calculate revenues for SFSP and SSO
+            var calculate_revenue = function(program){
+                /*
+                formula:
+                (breakfast meals per week * SFSP breakfast reimbursement rate * weeks serving meals) + 
+                (lunch meals per week * SFSP lunch reimbursement rate * weeks serving meals)
+                */
+                switch(true) {
+                    // if either weeks input is empty or breakfast and lunch meals are empty, then don't calculate anything yet
+                    case user_inputs["weeks"] == null:
+                    case (user_inputs["breakfast_meals"] == null && user_inputs["lunch_meals"] == null):
+                        break;
+                    // if weeks input and at least either breakfast or lunch meals are entered, then sum breakfast and lunch reimbursement and return the sum
+                    default:
+                        var breakfast_reimbursement = user_inputs["breakfast_meals"] * reimbursement_rates[program]["breakfast"] * user_inputs["weeks"];
+                        var lunch_reimbursement = user_inputs["lunch_meals"] * reimbursement_rates[program]["lunch"] * user_inputs["weeks"];
+                        return breakfast_reimbursement + lunch_reimbursement;
+                };
+            };
+            sfsp_revenue = calculate_revenue("sfsp");
+            document.getElementById("sfsp_revenue").innerHTML = to_dollars(sfsp_revenue);
+            // console.log(sfsp_revenue);
+            sso_revenue = calculate_revenue("sso");
+            document.getElementById("sso_revenue").innerHTML = to_dollars(sso_revenue);
+            // console.log(sso_revenue);
+        };
+
+        // // add event listeners to revenue inputs to make revenue calculations dynamic
+        // var revenue_inputs = ["breakfast_meals", "lunch_meals", "weeks"];
+        // for (revenue_input in revenue_inputs) {
+        //     document.getElementById(revenue_input).addEventListener("input", calculate_program_revenues);
+        // };
+        document.getElementById("breakfast_meals").addEventListener("input", calculate_program_revenues);
+        document.getElementById("lunch_meals").addEventListener("input", calculate_program_revenues);
+        document.getElementById("weeks").addEventListener("input", calculate_program_revenues);
+
+        // var revenue_inputs = ["breakfast_meals", "lunch_meals", "weeks"];
+        // for (revenue_input in revenue_inputs) {
+        //     document.getElementById(revenue_input).addEventListener("input", calculate_program_revenues);
+        // };
+        
+        // var revenue_outputs = ["sfsp_revenue", "sso_revenue"];
+        // for (revenue_output in revenue_outputs) {
+        //     document.getElementById(revenue_output).addEventListener("input", function() {
+        //         document.getElementById(revenue_output).innerHTML = output_spans[revenue_output];
+        //     });
+        // };
+
+        // breakfast_meals_input.addEventListener("input", function(){
+        //     breakfast_meals = document.getElementById("breakfast_meals").value;
+        //     console.log(breakfast_meals);
+        //     calculate_sfsp_revenue();
+        //     calculate_sso_revenue();
+        // });
+        // lunch_meals_input.addEventListener("input", function(){
+        //     lunch_meals = document.getElementById("lunch_meals").value;
+        //     console.log(lunch_meals);
+        //     calculate_sfsp_revenue();
+        //     calculate_sso_revenue();
+        // });
+        // weeks_input.addEventListener("input", function(){
+        //     weeks = document.getElementById("weeks").value;
+        //     console.log(weeks);
+        //     calculate_sfsp_revenue();
+        //     calculate_sso_revenue();
+        // });
+        
+        // var sso_breakfast_reimbursement_rate = 2.94;
+        // var sso_lunch_reimbursement_rate = 4.86;
+        // var sfsp_breakfast_reimbursement_rate = 3.03;
+        // var sfsp_lunch_reimbursement_rate = 5.4;
+
+        // var calculate_sfsp_revenue = function(){
+        //     switch(true) {
+        //         case weeks == null:
+        //             pass;
+        //         default:
+        //             var sfsp_breakfast_reimbursement = breakfast_meals * sfsp_breakfast_reimbursement_rate * weeks;
+        //             var sfsp_lunch_reimbursement = lunch_meals * sfsp_lunch_reimbursement_rate * weeks;
+        //             sfsp_revenue_span.innerHTML = (sfsp_breakfast_reimbursement + sfsp_lunch_reimbursement).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
+        //     };
+        // };
+
+        // var calculate_sso_revenue = function(){
+        //     switch(true) {
+        //         case weeks == null:
+        //             pass;
+        //         default:
+        //             var sso_breakfast_reimbursement = breakfast_meals * sso_breakfast_reimbursement_rate * weeks;
+        //             var sso_lunch_reimbursement = lunch_meals * sso_lunch_reimbursement_rate * weeks;
+        //             sso_revenue_span.innerHTML = (sso_breakfast_reimbursement + sso_lunch_reimbursement).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
+        //     };
+        // };
+
+        // // EXPENSE CALCULATIONS
+        // // // LABOR
+        // // // for all positions, cost = weekly hours * (revenue-generating weeks + non-revenue generating weeks) * weekly salary
+        var calculate_labor_costs = function() {
+            // get user inputs to calculate current labor costs
+            get_user_inputs();
+
+            // calculate labor costs only if at least one set of labor cost calculations is available and the number of program weeks has been specified
+            switch(true) {
+                case user_inputs["weeks"] == null:
+                case ((user_inputs["managerial_positions"] == null || user_inputs["managerial_weekly_salary"] == null) && (user_inputs["support_positions"] == null || user_inputs["support_weekly_salary"] == null) && (user_inputs["student_staff_positions"] == null || user_inputs["student_staff_weekly_salary"] == null)):
+                    break;
+                default:
+                    // get total operational weeks - revenue-generating weeks + non-revenue generating weeks
+                    var total_operational_weeks = user_inputs["weeks"] + user_inputs["non_revenue_weeks"];
+                    console.log("total operational weeks: " + total_operational_weeks);
+
+                    // calculate managerial cost
+                    var managerial_cost = user_inputs["managerial_positions"] * user_inputs["managerial_weekly_salary"] * total_operational_weeks;
+                    console.log("managerial cost: " + managerial_cost);
+
+                    // calculate support staff cost
+                    var support_cost = user_inputs["support_positions"] * user_inputs["support_weekly_salary"] * total_operational_weeks;
+                    console.log("support cost: " + support_cost);
+
+                    // calculate student staff costs
+                    var student_staff_cost = user_inputs["student_staff_positions"] * user_inputs["student_staff_weekly_salary"] * total_operational_weeks;
+                    console.log("student staff cost: " + student_staff_cost);
+
+                    return managerial_cost + support_cost + student_staff_cost;
+            };
+        };
+
+        // // // FOOD
+        // // // for all meals, cost = cost per meal * weekly meals * program weeks
+        var calculate_food_costs = function() {
+            // get user inputs to calculate meal costs
+            get_user_inputs();
+
+            // calculate food costs only if at least one set of meal cost inputs and number of program weeks is entered by user
+            switch(true) {
+                case user_inputs["weeks"] == null:
+                case ((user_inputs["breakfast_cost_per_meal"] == null || user_inputs["breakfast_meals"] == null) && (user_inputs["lunch_cost_per_meal"] == null || user_inputs["lunch_meals"] == null)):
+                    break;
+                default:
+                    // calculate breakfast cost
+                    var breakfast_cost = user_inputs["breakfast_cost_per_meal"] * user_inputs["breakfast_meals"] * user_inputs["weeks"];
+                    console.log("breakfast cost: " + breakfast_cost);
+
+                    // calculate lunch cost
+                    var lunch_cost = user_inputs["lunch_cost_per_meal"] * user_inputs["lunch_meals"] * user_inputs["weeks"];
+                    console.log("lunch cost: " + lunch_cost);
+
+                    // return total food cost
+                    return breakfast_cost + lunch_cost;
+            };
+        };
+
+        // // // TOTAL EXPENSES
+        // // // calculate total expenses - labor costs + food costs + marketing costs + other costs
+        var calculate_total_expenses = function() {
+            // get current user inputs for marketing and labor costs
+            get_user_inputs();
+
+            // calculate total expenses
+            var labor_costs = calculate_labor_costs();
+            var food_costs = calculate_food_costs(); 
+            expenses = labor_costs + food_costs + user_inputs["marketing_costs"] + user_inputs["other_costs"];
+
+            // write total expenses to webpage
+            document.getElementById("expenses").innerHTML = to_dollars(expenses);
+        };
+
+        document.getElementById("non_revenue_weeks").addEventListener("input", calculate_total_expenses);
+        document.getElementById("managerial_positions").addEventListener("input", calculate_total_expenses);
+        document.getElementById("managerial_weekly_salary").addEventListener("input", calculate_total_expenses);
+        document.getElementById("support_positions").addEventListener("input", calculate_total_expenses);
+        document.getElementById("support_weekly_salary").addEventListener("input", calculate_total_expenses);
+        document.getElementById("student_staff_positions").addEventListener("input", calculate_total_expenses);
+        document.getElementById("student_staff_weekly_salary").addEventListener("input", calculate_total_expenses);
+        document.getElementById("breakfast_cost_per_meal").addEventListener("input", calculate_total_expenses);
+        document.getElementById("lunch_cost_per_meal").addEventListener("input", calculate_total_expenses);
+        document.getElementById("marketing_costs").addEventListener("input", calculate_total_expenses);
+        document.getElementById("other_costs").addEventListener("input", calculate_total_expenses);
+
+        var calculate_net_revenues = function() {
+            switch(true) {
+                case sfsp_revenue == null:
+                case sso_revenue == null:
+                case expenses == null:
+                    break;
+                default:
+                    sfsp_net_revenue = sfsp_revenue - expenses;
+                    document.getElementById("sfsp_net_revenue").innerHTML = to_dollars(sfsp_net_revenue);
+                    sso_net_revenue = sso_revenue - expenses;
+                    document.getElementById("sso_net_revenue").innerHTML = to_dollars(sso_net_revenue);
+            };
+        };
+
+        document.getElementById("non_revenue_weeks").addEventListener("input", calculate_net_revenues);
+        document.getElementById("managerial_positions").addEventListener("input", calculate_net_revenues);
+        document.getElementById("managerial_weekly_salary").addEventListener("input", calculate_net_revenues);
+        document.getElementById("support_positions").addEventListener("input", calculate_net_revenues);
+        document.getElementById("support_weekly_salary").addEventListener("input", calculate_net_revenues);
+        document.getElementById("student_staff_positions").addEventListener("input", calculate_net_revenues);
+        document.getElementById("student_staff_weekly_salary").addEventListener("input", calculate_net_revenues);
+        document.getElementById("breakfast_cost_per_meal").addEventListener("input", calculate_net_revenues);
+        document.getElementById("lunch_cost_per_meal").addEventListener("input", calculate_net_revenues);
+        document.getElementById("marketing_costs").addEventListener("input", calculate_net_revenues);
+        document.getElementById("other_costs").addEventListener("input", calculate_net_revenues);
+
+    </script>
+</html>
