@@ -1,130 +1,25 @@
 <html>
+
     <head>
-
+        <link rel="stylesheet" href="summer_meals_calculator.css" />
     </head>
+
     <body>
-        <h1>Summer Meals Calculator</h1>
-        <h2>January 2026</h2>
 
-        <h3>INSTRUCTIONS</h3>
-
-        <p>Add your program's inputs to the boxes in gold: 21,000</p>
-        <p>If needed, guidance on standard estimates are provided in *purple*.</p>
-
-        <h3>Revenue</h3>
-
-        <p>
-            <strong>How many meals do you plan to serve each week?</strong>
-        </p>
-
-        <p>
-            Breakfast meals <br/>
-            <input id="breakfast_meals" name="breakfast_meals" type="number" />
-        </p>
-        <p>
-            
-        </p>
-
-        <p>
-            Lunch meals<br/>
-            <input id="lunch_meals" name="lunch_meals" type="number" />
-        </p>
-
-        <p>
-            <strong>How many weeks during the summer will your program serve meals?</strong> <br />
-            <em>*Most programs run 8 weeks*</em> <br/>
-            <input id="weeks" name="weeks" type="number" />
-        </p>
-
-        <p>
-            <strong>Estimated Revenue for SFSP: <span id="sfsp_revenue"></span></strong>
-        </p>
-
-        <p>
-            <strong>Estimated Revenue for SSO: <span id="sso_revenue"></span></strong>
-        </p>
-    
-        <h3>Expenses</h3>
-        
-        <h4>Labor</h4>
-        
-        <p>
-            <strong>Does your program schedule include additional time before or after meal service weeks for setup, training, or close-out? Enter number of non-revenue-generating weeks.</strong><br />
-            <em>*For example, a half week of prep/orientation and a half week of close-out would equal 1 week*</em><br />
-            <input id="non_revenue_weeks" name="non_revenue_weeks" type="number" />
+        <p class="section">
+            Summer Meals Calculator <br/>
+            January 2026
         </p>
         
-        <p>
-            <strong>How many managerial positions will your program require?</strong><br/>
-            <input id="managerial_positions" name="managerial_positions" type="number" />
+        <p class="section">
+            Instructions
         </p>
 
         <p>
-            <strong>What is the approx weekly salary of managerial positions?</strong><br />
-            <em>*A weekly salary of $1,200 assumes a 40-hour work week at $30/hour*</em><br />
-            <input id="managerial_weekly_salary" name="managerial_weekly_salary" type="number" />
+            Add your program's inputs to the boxes in gold: 21,000
         </p>
-
         <p>
-            <strong>How many supporting staff positions will your program require?</strong><br/>
-            <input id="support_positions" name="support_positions" type="number" />
-        </p>
-        
-        <p>
-            <strong>What is the approx weekly salary of supporting staff positions?</strong> <br />
-            <em>*A weekly salary of $800 assumes a 40-hour work week at $20/hour*</em><br />
-            <input id="support_weekly_salary" name="support_weekly_salary" type="number" />
-        </p>
-
-        <p>
-            <strong>How many student staff positions will your program require? </strong><br />
-            <input id="student_staff_positions" name="student_staff_positions" type="number" />
-        </p>
-
-        <p>
-            <strong>What is the approx weekly salary of student staff positions?</strong> <br />
-            <em>*A weekly salary of $400 assumes a 40-hour work week at $10/hour*</em><br />
-            <input id="student_staff_weekly_salary" name="student_staff_weekly_salary" type="number" />
-        </p>
-
-        <h4>Food</h4>
-        
-        <p>
-            <strong>What is your cost per meal for breakfast?</strong><br/>
-            <input id="breakfast_cost_per_meal" name="breakfast_cost_per_meal" type="number" />
-        </p>
-        
-        <p>
-            <strong>What is your cost per meal for lunch?</strong><br />
-            <em>*If unsure of your cost per meal, we recommend using $1.50 for breakfasts and $2.57 for lunches*</em><br />
-            <input id="lunch_cost_per_meal" name="lunch_cost_per_meal" type="number" />
-        </p>
-
-        <h4>Other</h4>
-        
-        <p>
-            <strong>If desired, add total summer marketing costs here.</strong> <br />
-            <em>*We recommend entering between $100 and $1,000, depending on your program size*</em><br />
-            <input id="marketing_costs" name="marketing_costs" type="number" />
-        </p>
-
-        <p>
-            <strong>Enter other anticipated costs for entire summer here.</strong><br />
-            Examples: packaging, paper products, vehicle rental, gas, etc. <br />
-            <em>*We recommend entering between $5,000 and $100,000, depending on your program size*</em><br />
-            <input id="other_costs" name="other_costs" type="number" />
-        </p>
-        
-        <p>
-            <strong>Estimated Expenses: <span id="expenses" name="expenses"></span></strong>
-        </p>
-
-        <p>
-            <strong>Estimated Net Revenue for SFSP: <span id="sfsp_net_revenue" name="sfsp_net_revenue"></span></strong>
-        </p>
-        
-        <p>
-            <strong>Estimated Net Revenue for SSO: <span id="sso_net_revenue" name="sso_net_revenue"></span></strong>
+            If needed, guidance on standard estimates are provided in *purple*.
         </p>
     
     </body>
@@ -156,25 +51,12 @@
             for (user_input of user_inputs_list) {
                 user_inputs[user_input.name] = Number(user_input.value);
             };
-            // console.log(user_inputs);
         };
-        // get_user_inputs();
 
         // convert dollar amounts to USD format
         var to_dollars = function(dollar_amount) {
             return dollar_amount.toLocaleString('en-US', {style: 'currency', currency: 'USD'})
         };
-
-        // // create dictionary to hold calculated dollar amounts
-        // var output_spans = {};
-        // var output_spans_list = document.getElementsByTagName("span");
-        // var output_span_values = function(){
-        //     for (output_span of output_spans_list) {
-        //         output_spans[output_span.id] = null;
-        //     };
-        //     console.log(output_spans);
-        // };
-        // output_span_values();
         
         // calculate SFSP revenue
         var calculate_program_revenues = function() {
@@ -201,79 +83,10 @@
                 };
             };
             sfsp_revenue = calculate_revenue("sfsp");
-            document.getElementById("sfsp_revenue").innerHTML = to_dollars(sfsp_revenue);
-            // console.log(sfsp_revenue);
+            document.getElementById("sfsp_revenue").innerHTML =  to_dollars(sfsp_revenue);
             sso_revenue = calculate_revenue("sso");
             document.getElementById("sso_revenue").innerHTML = to_dollars(sso_revenue);
-            // console.log(sso_revenue);
         };
-
-        // // add event listeners to revenue inputs to make revenue calculations dynamic
-        // var revenue_inputs = ["breakfast_meals", "lunch_meals", "weeks"];
-        // for (revenue_input in revenue_inputs) {
-        //     document.getElementById(revenue_input).addEventListener("input", calculate_program_revenues);
-        // };
-        document.getElementById("breakfast_meals").addEventListener("input", calculate_program_revenues);
-        document.getElementById("lunch_meals").addEventListener("input", calculate_program_revenues);
-        document.getElementById("weeks").addEventListener("input", calculate_program_revenues);
-
-        // var revenue_inputs = ["breakfast_meals", "lunch_meals", "weeks"];
-        // for (revenue_input in revenue_inputs) {
-        //     document.getElementById(revenue_input).addEventListener("input", calculate_program_revenues);
-        // };
-        
-        // var revenue_outputs = ["sfsp_revenue", "sso_revenue"];
-        // for (revenue_output in revenue_outputs) {
-        //     document.getElementById(revenue_output).addEventListener("input", function() {
-        //         document.getElementById(revenue_output).innerHTML = output_spans[revenue_output];
-        //     });
-        // };
-
-        // breakfast_meals_input.addEventListener("input", function(){
-        //     breakfast_meals = document.getElementById("breakfast_meals").value;
-        //     console.log(breakfast_meals);
-        //     calculate_sfsp_revenue();
-        //     calculate_sso_revenue();
-        // });
-        // lunch_meals_input.addEventListener("input", function(){
-        //     lunch_meals = document.getElementById("lunch_meals").value;
-        //     console.log(lunch_meals);
-        //     calculate_sfsp_revenue();
-        //     calculate_sso_revenue();
-        // });
-        // weeks_input.addEventListener("input", function(){
-        //     weeks = document.getElementById("weeks").value;
-        //     console.log(weeks);
-        //     calculate_sfsp_revenue();
-        //     calculate_sso_revenue();
-        // });
-        
-        // var sso_breakfast_reimbursement_rate = 2.94;
-        // var sso_lunch_reimbursement_rate = 4.86;
-        // var sfsp_breakfast_reimbursement_rate = 3.03;
-        // var sfsp_lunch_reimbursement_rate = 5.4;
-
-        // var calculate_sfsp_revenue = function(){
-        //     switch(true) {
-        //         case weeks == null:
-        //             pass;
-        //         default:
-        //             var sfsp_breakfast_reimbursement = breakfast_meals * sfsp_breakfast_reimbursement_rate * weeks;
-        //             var sfsp_lunch_reimbursement = lunch_meals * sfsp_lunch_reimbursement_rate * weeks;
-        //             sfsp_revenue_span.innerHTML = (sfsp_breakfast_reimbursement + sfsp_lunch_reimbursement).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-        //     };
-        // };
-
-        // var calculate_sso_revenue = function(){
-        //     switch(true) {
-        //         case weeks == null:
-        //             pass;
-        //         default:
-        //             var sso_breakfast_reimbursement = breakfast_meals * sso_breakfast_reimbursement_rate * weeks;
-        //             var sso_lunch_reimbursement = lunch_meals * sso_lunch_reimbursement_rate * weeks;
-        //             sso_revenue_span.innerHTML = (sso_breakfast_reimbursement + sso_lunch_reimbursement).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-        //     };
-        // };
 
         // // EXPENSE CALCULATIONS
         // // // LABOR
@@ -348,18 +161,6 @@
             document.getElementById("expenses").innerHTML = to_dollars(expenses);
         };
 
-        document.getElementById("non_revenue_weeks").addEventListener("input", calculate_total_expenses);
-        document.getElementById("managerial_positions").addEventListener("input", calculate_total_expenses);
-        document.getElementById("managerial_weekly_salary").addEventListener("input", calculate_total_expenses);
-        document.getElementById("support_positions").addEventListener("input", calculate_total_expenses);
-        document.getElementById("support_weekly_salary").addEventListener("input", calculate_total_expenses);
-        document.getElementById("student_staff_positions").addEventListener("input", calculate_total_expenses);
-        document.getElementById("student_staff_weekly_salary").addEventListener("input", calculate_total_expenses);
-        document.getElementById("breakfast_cost_per_meal").addEventListener("input", calculate_total_expenses);
-        document.getElementById("lunch_cost_per_meal").addEventListener("input", calculate_total_expenses);
-        document.getElementById("marketing_costs").addEventListener("input", calculate_total_expenses);
-        document.getElementById("other_costs").addEventListener("input", calculate_total_expenses);
-
         var calculate_net_revenues = function() {
             switch(true) {
                 case sfsp_revenue == null:
@@ -374,17 +175,263 @@
             };
         };
 
-        document.getElementById("non_revenue_weeks").addEventListener("input", calculate_net_revenues);
-        document.getElementById("managerial_positions").addEventListener("input", calculate_net_revenues);
-        document.getElementById("managerial_weekly_salary").addEventListener("input", calculate_net_revenues);
-        document.getElementById("support_positions").addEventListener("input", calculate_net_revenues);
-        document.getElementById("support_weekly_salary").addEventListener("input", calculate_net_revenues);
-        document.getElementById("student_staff_positions").addEventListener("input", calculate_net_revenues);
-        document.getElementById("student_staff_weekly_salary").addEventListener("input", calculate_net_revenues);
-        document.getElementById("breakfast_cost_per_meal").addEventListener("input", calculate_net_revenues);
-        document.getElementById("lunch_cost_per_meal").addEventListener("input", calculate_net_revenues);
-        document.getElementById("marketing_costs").addEventListener("input", calculate_net_revenues);
-        document.getElementById("other_costs").addEventListener("input", calculate_net_revenues);
+        class Category {
+            constructor(code, label, level, parent = null) {
+                this.code = code,
+                this.label = label,
+                this.level = level,
+                this.parent = parent
+            };
+
+            insert_category_section(code) {
+                var category_div = Object.assign(document.createElement("div"), {
+                    id: this.code + "_section",
+                    name: this.code + "_section",
+                    className: "section",
+                    innerHTML: this.label
+                });
+                if (this.parent == null) {
+                    document.getElementsByTagName("body")[0].appendChild(category_div);
+                } else {
+                    var parent_section_name = this.parent + "_section";
+                    document.getElementById(this.parent + "_section").appendChild(category_div);
+                };
+
+            };
+        };
+
+        var categories = [
+            {
+                code: "revenue",
+                label: "Revenue",
+                level: 1
+
+            },
+            {
+                code: "expenses",
+                label: "Expenses",
+                level: 1
+            },
+            {
+                code: "labor",
+                label: "Labor",
+                level: 2,
+                parent: "expenses"
+            },
+            {
+                code: "food",
+                label: "Food",
+                level: 2,
+                parent: "expenses"
+            },
+            {
+                code: "other",
+                label: "Other",
+                level: 2,
+                parent: "expenses"
+            }
+        ];
+
+        class Question {
+            constructor(code, category, question, description = null) {
+                this.code = code;
+                this.category = category;
+                this.question = question;
+                this.description = description;
+            };
+
+            insert_question() {
+                var question = Object.assign(document.createElement("p"), {
+                    id: this.code + "_question",
+                    name: this.code + "_question",
+                    className: "question",
+                    innerHTML: this.question + "<br />"
+                });
+                var description = Object.assign(document.createElement("span"), {
+                    id: this.code + "_description",
+                    name: this.code + "_description",
+                    className: "description",
+                    innerHTML: this.description + "<br />"
+                    }
+                );
+                var input = Object.assign(document.createElement("input"), {
+                    id: this.code,
+                    name: this.code,
+                    type: "number"
+                });
+                var category_section = this.category + "_section";
+                if (this.description == null) {
+                    document.getElementById(category_section).appendChild(question).appendChild(input);
+                } else {
+                    document.getElementById(category_section).appendChild(question).appendChild(description).appendChild(input);
+                };
+            };
+        };
+
+        var questions = [
+            {
+                code: "breakfast_meals",
+                category: "revenue",
+                question: "How many breakfast meals do you plan to serve each week?"
+            },
+            {
+                code: "lunch_meals",
+                category: "revenue",
+                question: "How many lunch meals do you plan to serve each week?"
+            },
+            {
+                code: "weeks",
+                category: "revenue",
+                question: "How many weeks during the summer will your program serve meals?",
+                description: "Most programs run 8 weeks"
+            },
+            {
+                code: "non_revenue_weeks",
+                category: "labor",
+                question: "Does your program schedule include additional time before or after meal service weeks for setup, training, or close-out? Enter number of non-revenue-generating weeks.",
+                description: "For example, a half week of prep/orientation and a half week of close-out would equal 1 week"
+            },
+            {
+                code: "managerial_positions",
+                category: "labor",
+                question: "How many managerial positions will your program require?"
+            },
+            {
+                code: "managerial_weekly_salary",
+                category: "labor",
+                question: "What is the approx weekly salary of managerial positions?",
+                description: "A weekly salary of $1,200 assumes a 40-hour work week at $30/hour"
+            },
+            {
+                code: "support_positions",
+                category: "labor",
+                question: "How many supporting staff positions will your program require?"
+            },
+            {
+                code: "support_weekly_salary",
+                category: "labor",
+                question: "What is the approx weekly salary of supporting staff positions?",
+                description: "A weekly salary of $800 assumes a 40-hour work week at $20/hour"
+            },
+            {
+                code: "student_staff_positions",
+                category: "labor",
+                question: "How many student staff positions will your program require?"
+            },
+            {
+                code: "student_staff_weekly_salary",
+                category: "labor",
+                question: "What is the approx weekly salary of student staff positions?",
+                description: "A weekly salary of $400 assumes a 40-hour work week at $10/hour"
+            },
+            {
+                code: "breakfast_cost_per_meal",
+                category: "food",
+                question: "What is your cost per meal for breakfast?",
+                description: "If unsure of your cost per meal, we recommend using $1.50 for breakfasts."
+            },
+            {
+                code: "lunch_cost_per_meal",
+                category: "food",
+                question: "What is your cost per meal for lunch?",
+                description: "If unsure of your cost per meal, we recommend using $2.57 for lunches."
+            },
+            {
+                code: "marketing_costs",
+                category: "other",
+                question: "If desired, add total summer marketing costs here.",
+                description: "We recommend entering between $100 and $1,000, depending on your program size."
+            },
+            {
+                code: "other_costs",
+                category: "other",
+                question: "Enter other anticipated costs for entire summer here.",
+                description: "Examples: packaging, paper products, vehicle rental, gas, etc. <br/> We recommend entering between $5,000 and $100,000, depending on your program size."
+            }
+        ];
+
+        class Output {
+            constructor(code, label, category) {
+                this.code = code,
+                this.label = label,
+                this.category = category
+            };
+
+            insert_output() {
+                var output_label_string = this.label + ": ";
+                var output_label = Object.assign(document.createElement("p"), {
+                    id: this.code + "_label",
+                    name: this.code + "_label",
+                    className: "output",
+                    innerHTML: output_label_string
+                });
+                var output_span = Object.assign(document.createElement("span"), {
+                    id: this.code,
+                    name: this.code,
+                    className: "output"
+                });
+                var output_section = this.category + "_section";
+                document.getElementById(output_section).appendChild(output_label);
+                document.getElementById(output_label.id).appendChild(output_span);
+            };
+        };
+
+        var outputs = [
+            {
+                code: "sfsp_revenue",
+                label: "Estimated Revenue for SFSP",
+                category: "revenue"
+            },
+            {
+                code: "sso_revenue",
+                label: "Estimated Revenue for SSO",
+                category: "revenue"
+            },
+            {
+                code: "expenses",
+                label: "Estimated Expenses",
+                category: "expenses"
+            },
+            {
+                code: "sfsp_net_revenue",
+                label: "Estimated Net Revenue for SFSP",
+                category: "expenses"
+            },
+            {
+                code: "sso_net_revenue",
+                label: "Estimated Net Revenue for SSO",
+                category: "expenses"
+            }
+        ]
+
+        // CONTROLLER
+        categories.forEach((category) => {
+            var this_category = new Category(
+                category.code, category.label, category.level, category.parent
+            );
+            this_category.insert_category_section();
+        });
+        
+        questions.forEach((question => {
+            var this_question = new Question(
+                question.code, question.category, question.question, question.description
+            );
+            this_question.insert_question();
+        }));
+
+        outputs.forEach((output => {
+            var this_output = new Output(
+                output.code, output.label, output.category
+            );
+            this_output.insert_output();
+        }));
+
+        var inputs = document.querySelectorAll("input");
+        inputs.forEach((input) => {
+            input.addEventListener("input", calculate_program_revenues);
+            input.addEventListener("input", calculate_total_expenses);
+            input.addEventListener("input", calculate_net_revenues);
+        });
 
     </script>
 </html>
