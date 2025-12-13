@@ -1,0 +1,25 @@
+body {
+    padding-left: 0%;
+    padding-right: 10%;
+}
+
+.section {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.question {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.description {
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.output {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
