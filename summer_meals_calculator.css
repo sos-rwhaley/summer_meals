@@ -19,7 +19,12 @@ body {
     font-weight: normal;
 }
 
+input {
+    font-size: 1rem;
+}
+
 .output {
     font-size: 1.1rem;
     font-weight: bold;
+
 }
