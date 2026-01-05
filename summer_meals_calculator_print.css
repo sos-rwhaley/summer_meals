@@ -7,8 +7,9 @@
         display: block !important;
     }
 
-    #calculator {
+    #calculator, #calculator * {
         display: block !important;
     }
 
 }
+
